@@ -9,6 +9,6 @@ jobs:
         id: hello
         uses: driccio98/git-2-discord@v1.4
         with:
-          commits: '${{github.event.commits}}'
+          commits: ${{github.event.commits}}
       - name: Get the output time
         run: echo "The commits are ${{ steps.hello.outputs.time }}"
