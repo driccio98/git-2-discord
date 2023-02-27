@@ -14,21 +14,29 @@ try {
   };
 
   if (commits.length && commits.length >= 1) {
-    discordPayload.embeds = commits.map((commit) => ({
-      title: commit.message,
-      description: `By: ${commit.author.name}`,
-      color: 16711680,
-    }));
+    for (const commit of commits) {
+      if (commit.message.includes("BREAKING CHANGE")) {
+        discordPayload.embeds.push({
+          title: commit.message,
+          description: `By: ${commit.author.name}`,
+          color: 16711680,
+        });
+      }
+    }
   } else {
-    discordPayload.embeds.push({
-      title: headCommit.message,
-      description: `By: ${headCommit.author.name}`,
-      color: 16711680,
-    });
+    if (headCommit.message.includes("BREAKING CHANGE")) {
+      discordPayload.embeds.push({
+        title: headCommit.message,
+        description: `By: ${headCommit.author.name}`,
+        color: 16711680,
+      });
+    }
   }
 
-  sendDiscordMessage(discordWebhookUrl, discordPayload);
-
+  if (discordPayload.embeds.length > 0) {
+    sendDiscordMessage(discordWebhookUrl, discordPayload);
+  }
+  
   core.setOutput("Commits:", commits);
   const payload = JSON.stringify(github.context.payload, undefined, 2);
   console.log(`The event payload: ${payload}`);
