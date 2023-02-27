@@ -1,4 +1,7 @@
-on: [push]
+on:
+  push:
+    branches:
+      - main
 
 jobs:
   hello_world_job:
@@ -12,6 +15,6 @@ jobs:
     steps:
       - name: Hello world action step
         id: hello
-        uses: driccio98/git-2-discord@v2.6
+        uses: driccio98/git-2-discord@v2.7
       - name: Get the output time
         run: echo "The commits are ${{ steps.hello.outputs.time }}"
