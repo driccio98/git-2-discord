@@ -3,9 +3,9 @@ const github = require("@actions/github");
 const axios = require("axios");
 
 try {
-  const headCommit = process.env.HEAD_COMMIT;
-  const commits = process.env.COMMITS;
-  const repository = process.env.REPOSITORY;
+  const headCommit = JSON.parse(process.env.HEAD_COMMIT);
+  const commits = JSON.parse(process.env.COMMITS || "{}");
+  const repository = JSON.parse(process.env.REPOSITORY);
   const discordWebhookUrl = process.env.DISCORD_WEBHOOK;
 
   const discordPayload = {
@@ -13,7 +13,7 @@ try {
     embeds: [],
   };
 
-  if (commits.length) {
+  if (commits.length && commits.length >= 1) {
     discordPayload.embeds = commits.map((commit) => ({
       title: commit.message,
       description: `By: ${commit.author.name}`,
@@ -28,7 +28,7 @@ try {
   }
 
   sendDiscordMessage(discordWebhookUrl, discordPayload);
-  
+
   core.setOutput("Commits:", commits);
   const payload = JSON.stringify(github.context.payload, undefined, 2);
   console.log(`The event payload: ${payload}`);
