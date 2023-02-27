@@ -7,8 +7,8 @@ jobs:
     steps:
       - name: Hello world action step
         id: hello
-        uses: driccio98/git-2-discord@v1.4
+        uses: driccio98/git-2-discord@v1.6
         with:
-          commits: ${{github.event.commits}}
+          commits: ${{ github.event.commits }}
       - name: Get the output time
         run: echo "The commits are ${{ steps.hello.outputs.time }}"
