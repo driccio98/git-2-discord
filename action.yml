@@ -1,9 +1,5 @@
 name: 'Git 2 Discord'
 description: 'Gets the commits and spits it out again'
-inputs:
-  commits:  # id of input
-    description: 'Commits from push event'
-    required: true
 outputs:
   time: # id of output
     description: 'The same commits input'
