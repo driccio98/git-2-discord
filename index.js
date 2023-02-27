@@ -1,13 +1,41 @@
-const core = require('@actions/core');
-const github = require('@actions/github');
+const core = require("@actions/core");
+const github = require("@actions/github");
+const axios = require("axios");
 
 try {
-  // `who-to-greet` input defined in action metadata file
+  const headCommit = process.env.HEAD_COMMIT;
   const commits = process.env.COMMITS;
+  const repository = process.env.REPOSITORY;
+  const discordWebhookUrl = process.env.DISCORD_WEBHOOK;
+
+  const discordPayload = {
+    content: `New breaking change(s) on [${repository.name}](${repository.html_url}):`,
+    embeds: [],
+  };
+
+  if (commits.length) {
+    discordPayload.embeds = commits.map((commit) => ({
+      title: commit.message,
+      description: `By: ${commit.author.name}`,
+      color: 16711680,
+    }));
+  } else {
+    discordPayload.embeds.push({
+      title: headCommit.message,
+      description: `By: ${headCommit.author.name}`,
+      color: 16711680,
+    });
+  }
+
+  sendDiscordMessage(discordWebhookUrl, discordPayload);
+  
   core.setOutput("Commits:", commits);
-  // Get the JSON webhook payload for the event that triggered the workflow
-  const payload = JSON.stringify(github.context.payload, undefined, 2)
+  const payload = JSON.stringify(github.context.payload, undefined, 2);
   console.log(`The event payload: ${payload}`);
 } catch (error) {
   core.setFailed(error.message);
+}
+
+async function sendDiscordMessage(discordWebhookUrl, payload) {
+  return await axios.post(discordWebhookUrl, payload);
 }
