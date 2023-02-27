@@ -7,11 +7,11 @@ jobs:
     env:
       DISCORD_WEBHOOK: 'https://discord.com/api/webhooks/1077696082781409290/z12vqgUZIvtq8fbfxp-WGAa8Ytal9hRV5Cy_QKT1hjIwRy6Ak_7HK3O2UxYkVSfr6m1_'
       REPOSITORY: ${{ toJSON(github.event.repository) }}
-      HEAD_COMMIT: ${{ toJSON(github.event.commits) }}
-      COMMITS: ${{ toJSON(github.event.head_commit) }}
+      COMMITS: ${{ toJSON(github.event.commits) }}
+      HEAD_COMMIT: ${{ toJSON(github.event.head_commit) }}
     steps:
       - name: Hello world action step
         id: hello
-        uses: driccio98/git-2-discord@v2.4
+        uses: driccio98/git-2-discord@v2.5
       - name: Get the output time
         run: echo "The commits are ${{ steps.hello.outputs.time }}"
