@@ -13,7 +13,7 @@ jobs:
       COMMITS: ${{ toJSON(github.event.commits) }}
       HEAD_COMMIT: ${{ toJSON(github.event.head_commit) }}
     steps:
-      - name: Hello world action step
+      - name: Send message to discord
         id: hello
         uses: driccio98/git-2-discord@v2.8
       - name: Get the output time
