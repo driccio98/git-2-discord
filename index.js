@@ -2,6 +2,7 @@ const core = require("@actions/core");
 const github = require("@actions/github");
 const axios = require("axios");
 
+
 try {
   const headCommit = JSON.parse(process.env.HEAD_COMMIT);
   const commits = JSON.parse(process.env.COMMITS || "{}");
