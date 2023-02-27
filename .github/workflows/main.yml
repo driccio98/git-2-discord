@@ -15,6 +15,6 @@ jobs:
     steps:
       - name: Send message to discord
         id: hello
-        uses: driccio98/git-2-discord@v1.1
+        uses: driccio98/git-2-discord@v1.2
       - name: Get the output time
         run: echo "The commits are ${{ steps.hello.outputs.time }}"

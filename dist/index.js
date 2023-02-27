@@ -16287,7 +16287,7 @@ try {
       if (regex.test(commit.message)) {
         discordPayload.embeds.push({
           title: commit.message,
-          description: `By: ${commit.author.name}`,
+          description: `Commit URL: ${commit.url}\nBy: ${commit.author.name}`,
           color: 16711680,
         });
       }
@@ -16296,7 +16296,7 @@ try {
     if (regex.test(headCommit.message)) {
       discordPayload.embeds.push({
         title: headCommit.message,
-        description: `By: ${headCommit.author.name}`,
+        description: `Commit URL: ${headCommit.url}\nBy: ${headCommit.author.name}`,
         color: 16711680,
       });
     }
