@@ -11881,14 +11881,6 @@ module.exports = eval("require")("debug");
 
 /***/ }),
 
-/***/ 1061:
-/***/ ((module) => {
-
-module.exports = eval("require")("dotenv");
-
-
-/***/ }),
-
 /***/ 569:
 /***/ ((module) => {
 
@@ -16275,7 +16267,7 @@ var __webpack_exports__ = {};
 const core = __nccwpck_require__(6398);
 const github = __nccwpck_require__(174);
 const axios = __nccwpck_require__(5209);
-(__nccwpck_require__(1061).config)();
+
 
 try {
   const headCommit = JSON.parse(process.env.HEAD_COMMIT);
@@ -16288,9 +16280,11 @@ try {
     embeds: [],
   };
 
+  const regex = /breaking change/i;
+
   if (commits.length && commits.length >= 1) {
     for (const commit of commits) {
-      if (commit.message.includes("BREAKING CHANGE")) {
+      if (regex.test(commit.message)) {
         discordPayload.embeds.push({
           title: commit.message,
           description: `By: ${commit.author.name}`,
@@ -16299,7 +16293,7 @@ try {
       }
     }
   } else {
-    if (headCommit.message.includes("BREAKING CHANGE")) {
+    if (regex.test(headCommit.message)) {
       discordPayload.embeds.push({
         title: headCommit.message,
         description: `By: ${headCommit.author.name}`,

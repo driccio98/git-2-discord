@@ -14,9 +14,11 @@ try {
     embeds: [],
   };
 
+  const regex = /breaking change/i;
+
   if (commits.length && commits.length >= 1) {
     for (const commit of commits) {
-      if (commit.message.includes("BREAKING CHANGE")) {
+      if (regex.test(commit.message)) {
         discordPayload.embeds.push({
           title: commit.message,
           description: `By: ${commit.author.name}`,
@@ -25,7 +27,7 @@ try {
       }
     }
   } else {
-    if (headCommit.message.includes("BREAKING CHANGE")) {
+    if (regex.test(headCommit.message)) {
       discordPayload.embeds.push({
         title: headCommit.message,
         description: `By: ${headCommit.author.name}`,
